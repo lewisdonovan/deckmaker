@@ -1,0 +1,24 @@
+{
+  "name": "deckmaker",
+  "version": "1.0.0",
+  "description": "Slide deck generator",
+  "main": "app.js",
+  "repository": "https://github.com/lewisdonovan/deckmaker",
+  "author": "Lewis Donovan <lewis.donovan@sonymusic.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.0",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "decktape": "^2.8.8",
+    "minimist": "^1.2.0"
+  }
+}
