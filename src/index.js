@@ -1,18 +1,33 @@
 'use strict';
 const exec = require('node-exec-promise').exec;
+const express = require('express');
 
-//Get args from terminal command
-const args = process.argv;
-const url = args[2];
-const filename = args[3];
+//Start the server
+const app = express();
+const httpServer = require('http').createServer(app);
+httpServer.listen('3000');
 
-//Sanity check
-console.log(url);
-console.log(filename);
+//Run the function
+app.get('/', function(req, res) {
 
-//Execute the dectape command
-exec('decktape webslides '+url+' '+filename).then(function(out) {
-  console.log(out.stdout, out.stderr);
-}, function(err) {
-  console.error(err);
+  //Get the query params
+  const url = decodeURIComponent(req.query.url);
+  let filename = decodeURIComponent(req.query.filename);
+
+  //Ensure we have a file extension
+  filename.includes('.pdf') ? null : filename += '.pdf';
+
+  url && filename ?
+    //Run the decktape command
+    exec(`decktape automatic ${url} ${filename}`).then(function(out) {
+      console.log(`Created: ${filename}`);
+    }, function(e) {
+      console.error(e);
+    })
+  :
+    console.error('Please provide query vars "url" and "filename".');
+    
+  res.end();
+  process.exit();
+
 });
